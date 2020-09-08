@@ -58,7 +58,7 @@ namespace FightArena
             int postDefence = damage - Logic.random(this.lowestDefence, this.highestDefence);
             if(postDefence > 0)
             {
-                this.HitPoints -= damage;
+                this.HitPoints -= postDefence;
             }
         }
 
