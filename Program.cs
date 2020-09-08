@@ -56,9 +56,50 @@ namespace FightArena
                 Console.WriteLine(pair.FirstFighter.Name + " Vs. " + pair.SecondFighter.Name);
                 Console.ReadKey();
                 contestants.Add(pair.Fight());
-                //Console.Clear();
+                Console.Clear();
             }
             fightingPairs.Clear();
+
+            // Semi FInals
+            // randomly distributing the remaining contestants
+            while (contestants.Count > 0 && contestants.Count / 2 >= 1)
+            {
+                int H1 = 0;
+                int H2 = 0;
+                while (H1 == H2)
+                {
+                    H1 = Logic.random(0, contestants.Count - 1);
+                    H2 = Logic.random(0, contestants.Count - 1);
+                }
+
+                fightingPairs.Add(new FightingPair(contestants[H1], contestants[H2]));
+                contestants.RemoveAt(H1);
+                if (H1 < H2)
+                {
+                    H2--;
+                }
+                contestants.RemoveAt(H2);
+            }
+
+            // Now the fighting!
+            Console.WriteLine("Welcome to the Semi Finals!");
+            foreach (FightingPair pair in fightingPairs)
+            {
+                Console.WriteLine(pair.FirstFighter.Name + " Vs. " + pair.SecondFighter.Name);
+                Console.ReadKey();
+                contestants.Add(pair.Fight());
+                Console.Clear();
+            }
+            fightingPairs.Clear();
+
+            // Now the final round.
+            Console.WriteLine("Welcome to the Final combat!");
+            FightingPair finalPair = new FightingPair(contestants[0], contestants[1]);
+
+            SuperHero AbsoluteWInner = finalPair.Fight();
+
+            Console.WriteLine(AbsoluteWInner.Name + " is the winner of the final round! All hail " + AbsoluteWInner + "!!!");
+            Console.ReadKey();
         }
     }
 }
